@@ -7,7 +7,8 @@
   "main": "build/main.js",
   "scripts": {
     "build": "babel *.js --out-dir build",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder build --mac --win --linux"
   },
   "repository": "git@github.com:tylerlong/wgc-desktop.git",
   "author": {
@@ -19,6 +20,7 @@
     "electron-updater": "^2.23.3"
   },
   "devDependencies": {
+    "asar": "^0.14.3",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "electron": "^2.0.4",
@@ -37,7 +39,7 @@
     "productName": "WeGlipChat",
     "files": [
       "build/main.js",
-      "!node_modules${/*}"
+      "build/menu.js"
     ],
     "mac": {
       "category": "public.app-category.developer-tools"

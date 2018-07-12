@@ -2,7 +2,7 @@ import { app, Menu, shell, dialog } from 'electron'
 
 import pkg from '../package.json'
 
-const productName = pkg.build.productName
+const productName = 'WeGlipChat'
 
 const template = [
   {
