@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
 
@@ -30,6 +30,10 @@ function createWindow () {
     } else {
       app.dock.setBadge('')
     }
+  })
+  mainWindow.webContents.on('new-window', (event, url) => {
+    event.preventDefault()
+    shell.openExternal(url) // new window in user's default browser
   })
 }
 
