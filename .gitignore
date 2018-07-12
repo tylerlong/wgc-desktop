@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.secret
+
+# misc
+.DS_Store
+npm-debug.log
+yarn-error.log
