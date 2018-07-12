@@ -2,14 +2,23 @@
   "name": "wgc-desktop",
   "version": "0.1.0",
   "license": "MIT",
+  "main": "build/main.js",
+  "scripts": {
+    "build": "babel main.js --watch --out-file build/main.js",
+    "start": "electron ."
+  },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "electron": "^2.0.4",
     "electron-builder": "^20.20.4",
     "eslint-plugin-html": "^4.0.5",
     "standard": "^11.0.1",
-    "webpack": "^4.16.0",
-    "webpack-cli": "^3.0.8",
     "yarn-upgrade-all": "^0.3.0"
+  },
+  "standard": {
+    "ignore": [
+      "/build/"
+    ]
   }
 }
