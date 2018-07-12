@@ -2,10 +2,21 @@
   "name": "wgc-desktop",
   "version": "0.1.0",
   "license": "MIT",
+  "private": true,
+  "description": "WeGlipChat Desktop Apps for macOS, Windows & Linux.",
   "main": "build/main.js",
   "scripts": {
-    "build": "babel main.js --out-file build/main.js",
+    "build": "babel *.js --out-dir build",
     "start": "electron ."
+  },
+  "repository": "git@github.com:tylerlong/wgc-desktop.git",
+  "author": {
+    "name": "Tyler Liu",
+    "email": "tyler.liu@ringcentral.com"
+  },
+  "dependencies": {
+    "electron-log": "^2.2.16",
+    "electron-updater": "^2.23.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -20,5 +31,31 @@
     "ignore": [
       "/build/"
     ]
+  },
+  "build": {
+    "appId": "wgc-desktop.ringcentral.com",
+    "productName": "WeGlipChat",
+    "files": [
+      "build/main.js",
+      "!node_modules${/*}"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 128,
+          "y": 160
+        },
+        {
+          "x": 384,
+          "y": 160,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "compression": "maximum"
   }
 }
