@@ -19,6 +19,14 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null
   })
+  mainWindow.on('page-title-updated', function (_, title) {
+    const match = title.match(/\((\d+\+?)\) WeGlipChat/)
+    if (match !== null) {
+      app.dock.setBadge(match[1])
+    } else {
+      app.dock.setBadge('')
+    }
+  })
 }
 
 app.on('ready', () => {
