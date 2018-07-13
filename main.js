@@ -17,7 +17,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 600,
-    alwaysOnTop: true
+    alwaysOnTop: true,
+    title: 'WeGlipChat'
   })
   mainWindow.loadURL('https://tylerlong.github.io/wgc')
   mainWindow.on('closed', function () {
