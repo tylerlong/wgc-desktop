@@ -17,7 +17,6 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 600,
-    alwaysOnTop: true,
     title: 'WeGlipChat'
   })
   mainWindow.loadURL('https://tylerlong.github.io/wgc')
@@ -27,9 +26,21 @@ function createWindow () {
   mainWindow.on('page-title-updated', function (_, title) {
     const match = title.match(/\((\d+\+?)\) WeGlipChat/)
     if (match !== null) {
-      app.dock.setBadge(match[1])
+      switch (process.platform) {
+        case 'darwin':
+          app.dock.setBadge(match[1])
+          break
+        default:
+          break
+      }
     } else {
-      app.dock.setBadge('')
+      switch (process.platform) {
+        case 'darwin':
+          app.dock.setBadge('')
+          break
+        default:
+          break
+      }
     }
   })
   mainWindow.webContents.on('new-window', (event, url) => {
