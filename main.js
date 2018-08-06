@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
+import path from 'path'
 
 import { setApplicationMenu } from './menu'
 
@@ -30,6 +31,9 @@ function createWindow () {
         case 'darwin':
           app.dock.setBadge(match[1])
           break
+        case 'win32':
+          mainWindow.setOverlayIcon(path.join(__dirname, 'red-dot.png'), `${match[1]} unread messages`)
+          break
         default:
           break
       }
@@ -37,6 +41,9 @@ function createWindow () {
       switch (process.platform) {
         case 'darwin':
           app.dock.setBadge('')
+          break
+        case 'win32':
+          mainWindow.setOverlayIcon(null, 'No unread message')
           break
         default:
           break
