@@ -2,6 +2,7 @@ import { app, BrowserWindow, shell, nativeImage } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
 import path from 'path'
+import Jimp from 'jimp'
 
 import { setApplicationMenu } from './menu'
 
@@ -24,7 +25,7 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null
   })
-  mainWindow.on('page-title-updated', function (_, title) {
+  mainWindow.on('page-title-updated', async function (_, title) {
     const match = title.match(/\((\d+\+?)\) WeGlipChat/)
     if (match !== null) {
       switch (process.platform) {
@@ -32,7 +33,9 @@ function createWindow () {
           app.dock.setBadge(match[1])
           break
         case 'win32':
-          mainWindow.setOverlayIcon(nativeImage.createFromPath(path.join(__dirname, '..', 'red-dot.png')), `${match[1]} unread messages`)
+          const jimp = await Jimp.read(path.join(__dirname, '..', 'red-dot.png'))
+          const buffer = await jimp.getBufferAsync(Jimp.MIME_PNG)
+          mainWindow.setOverlayIcon(nativeImage.createFromBuffer(buffer), `${match[1]} unread messages`)
           break
         default:
           break
