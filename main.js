@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, shell, nativeImage } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
 import path from 'path'
@@ -32,7 +32,7 @@ function createWindow () {
           app.dock.setBadge(match[1])
           break
         case 'win32':
-          mainWindow.setOverlayIcon(path.join(__dirname, 'red-dot.png'), `${match[1]} unread messages`)
+          mainWindow.setOverlayIcon(nativeImage.createFromPath(path.join(__dirname, '..', 'red-dot.png')), `${match[1]} unread messages`)
           break
         default:
           break
@@ -43,7 +43,7 @@ function createWindow () {
           app.dock.setBadge('')
           break
         case 'win32':
-          mainWindow.setOverlayIcon(null, 'No unread message')
+          mainWindow.setOverlayIcon(null, '')
           break
         default:
           break
