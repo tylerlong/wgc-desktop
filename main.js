@@ -39,22 +39,23 @@ function createWindow () {
   mainWindow.on('page-title-updated', async function (_, title) {
     const match = title.match(/\((\d+\+?)\) WeGlipChat/)
     if (match !== null) {
+      const badgeStr = match[1]
       switch (process.platform) {
         case 'darwin':
-          app.dock.setBadge(match[1])
+          app.dock.setBadge(badgeStr)
           break
         case 'win32':
           const badgeIcon = new BadgeIcon({
             badgeWidth: 128, // badge width
             badgeHeight: 128, // badge height
-            text: '8', // badge text
-            fontSize: 96, // font size
+            text: badgeStr, // badge text
+            fontSize: 120 - badgeStr.length * 20, // font size
             color: 'white', // text color
             bgColor: 'red' // background color
           })
           invisibleWindow.loadURL(`data:image/svg+xml;charset=UTF-8,${encodeURI(badgeIcon.svg())}`)
           setTimeout(() => {
-            invisibleWindow.capturePage({x: 0, y: 0, width: 128, height: 128}, image => {
+            invisibleWindow.capturePage({ x: 0, y: 0, width: 128, height: 128 }, image => {
               mainWindow.setOverlayIcon(image, `${match[1]} unread messages`)
             })
           }, 1000)
