@@ -1,7 +1,7 @@
-import { app, BrowserWindow, shell, nativeImage } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
-import path from 'path'
+import BadgeIcon from 'badge-icon'
 
 import { setApplicationMenu } from './menu'
 
@@ -13,6 +13,7 @@ setInterval(() => {
 }, 3600000) // check for updates every hour
 
 let mainWindow
+let invisibleWindow
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -20,9 +21,20 @@ function createWindow () {
     height: 600,
     title: 'WeGlipChat'
   })
+  if (process.platform === 'win32') {
+    invisibleWindow = new BrowserWindow({
+      width: 512,
+      height: 512,
+      show: false
+    })
+  }
   mainWindow.loadURL('https://tylerlong.github.io/wgc')
   mainWindow.on('closed', function () {
     mainWindow = null
+    if (process.platform === 'win32') {
+      invisibleWindow.close()
+      invisibleWindow = null
+    }
   })
   mainWindow.on('page-title-updated', function (_, title) {
     const match = title.match(/\((\d+\+?)\) WeGlipChat/)
@@ -32,7 +44,18 @@ function createWindow () {
           app.dock.setBadge(match[1])
           break
         case 'win32':
-          mainWindow.setOverlayIcon(nativeImage.createFromPath(path.join(__dirname, '..', 'red-dot.png')), `${match[1]} unread messages`)
+          const badgeIcon = new BadgeIcon({
+            badgeWidth: 128, // badge width
+            badgeHeight: 128, // badge height
+            text: '8', // badge text
+            fontSize: 96, // font size
+            color: 'white', // text color
+            bgColor: 'red' // background color
+          })
+          invisibleWindow.loadURL(`data:image/svg+xml;charset=UTF-8,${encodeURI(badgeIcon.svg())}`)
+          invisibleWindow.capturePage(image => {
+            mainWindow.setOverlayIcon(image, `${match[1]} unread messages`)
+          })
           break
         default:
           break

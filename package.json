@@ -16,6 +16,7 @@
     "email": "tyler.liu@ringcentral.com"
   },
   "dependencies": {
+    "badge-icon": "^0.1.0",
     "electron-log": "^2.2.16",
     "electron-updater": "^3.0.3"
   },
