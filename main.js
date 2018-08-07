@@ -23,8 +23,8 @@ function createWindow () {
   })
   if (process.platform === 'win32') {
     invisibleWindow = new BrowserWindow({
-      width: 512,
-      height: 512,
+      width: 256,
+      height: 256,
       show: false
     })
   }
@@ -54,11 +54,11 @@ function createWindow () {
             bgColor: 'red' // background color
           })
           invisibleWindow.loadURL(`data:image/svg+xml;charset=UTF-8,${encodeURI(badgeIcon.svg())}`)
-          setTimeout(() => {
+          invisibleWindow.once('ready-to-show', () => {
             invisibleWindow.capturePage({ x: 0, y: 0, width: 128, height: 128 }, image => {
               mainWindow.setOverlayIcon(image, `${match[1]} unread messages`)
             })
-          }, 1000)
+          })
           break
         default:
           break
