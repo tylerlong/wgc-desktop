@@ -53,9 +53,11 @@ function createWindow () {
             bgColor: 'red' // background color
           })
           invisibleWindow.loadURL(`data:image/svg+xml;charset=UTF-8,${encodeURI(badgeIcon.svg())}`)
-          invisibleWindow.capturePage(image => {
-            mainWindow.setOverlayIcon(image, `${match[1]} unread messages`)
-          })
+          setTimeout(() => {
+            invisibleWindow.capturePage({x: 0, y: 0, width: 128, height: 128}, image => {
+              mainWindow.setOverlayIcon(image, `${match[1]} unread messages`)
+            })
+          }, 1000)
           break
         default:
           break
