@@ -1,6 +1,6 @@
 {
   "name": "wgc-desktop",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "private": true,
   "description": "WeGlipChat Desktop Apps for macOS, Windows & Linux.",
@@ -45,6 +45,7 @@
       "category": "public.app-category.developer-tools"
     },
     "dmg": {
+      "background": "background.png",
       "contents": [
         {
           "x": 128,
