@@ -2,6 +2,7 @@ import { app, BrowserWindow, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import electronLog from 'electron-log'
 import BadgeIcon from 'badge-icon'
+import path from 'path'
 
 import { setApplicationMenu } from './menu'
 
@@ -19,7 +20,11 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 600,
-    title: 'WeGlipChat'
+    title: 'WeGlipChat',
+    webPreferences: {
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js')
+    }
   })
   if (process.platform === 'win32') {
     invisibleWindow = new BrowserWindow({
@@ -29,6 +34,7 @@ function createWindow () {
     })
   }
   mainWindow.loadURL('https://tylerlong.github.io/wgc')
+  // mainWindow.loadURL('http://localhost:6015/')
   mainWindow.on('closed', function () {
     mainWindow = null
     if (process.platform === 'win32') {
