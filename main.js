@@ -5,10 +5,9 @@ import BadgeIcon from 'badge-icon'
 import path from 'path'
 
 import { setApplicationMenu } from './menu'
-import pkg from '../package.json'
 
 // for desktop notification on Windows
-app.setAppUserModelId(pkg.build.appId)
+app.setAppUserModelId('wgc-desktop.ringcentral.com')
 
 electronLog.transports.file.level = 'info'
 autoUpdater.logger = electronLog
